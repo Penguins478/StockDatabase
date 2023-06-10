@@ -1,6 +1,16 @@
 import sqlite3
 import alpaca_trade_api as tradeapi
 
+''' 
+Made a scheduler that runs this file at a certain time.
+
+I used "30 4 * * * /opt/homebrew/bin/python3 /Users/ryan/Desktop/StockTradingApp/populate_db.py >> /Users/ryan/Desktop/StockTradingApp/populate.log 2>&1"
+to dump all print output from populate_db.py (like adding new stocks ___) into populate.log every day at 4:30am (https://crontab.guru/). I put that line into my cron using
+crontab -e. I also had to give full disk access to cron (https://medium.com/vunamhung/granting-full-disk-access-to-cron-29d2267fbe62) so python3 could
+open the files. You may also have to say "chmod +rx /Users/ryan/Desktop/StockTradingApp/populate_db.py" if errors still persist.
+
+'''
+
 connection = sqlite3.connect('/Users/ryan/Desktop/StockTradingApp/app.db')
 connection.row_factory = sqlite3.Row
 
@@ -37,13 +47,3 @@ for asset in assets:
         print(e)
 
 connection.commit()
-
-''' 
-Make a scheduler that runs this file at a certain time.
-
-I used "30 4 * * * /opt/homebrew/bin/python3 /Users/ryan/Desktop/StockTradingApp/populate_db.py >> /Users/ryan/Desktop/StockTradingApp/populate.log 2>&1"
-to dump all print output from populate_db.py (like adding new stocks ___) into populate.log every day at 4:30am (https://crontab.guru/). I put that line into my cron using
-crontab -e. I also had to give full disk access to cron (https://medium.com/vunamhung/granting-full-disk-access-to-cron-29d2267fbe62) so python3 could
-open the files. You may also have to say "chmod +rx /Users/ryan/Desktop/StockTradingApp/populate_db.py" if errors still persist.
-
-'''
