@@ -1,1 +1,1 @@
-# StockTradingApp
+# StockDatabase

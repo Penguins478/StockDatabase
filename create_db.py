@@ -1,6 +1,7 @@
 import sqlite3
+import config
 
-connection = sqlite3.connect('app.db')
+connection = sqlite3.connect(config.DB_FILE)
 
 cursor = connection.cursor()
 

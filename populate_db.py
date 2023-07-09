@@ -1,5 +1,6 @@
 import sqlite3
 import alpaca_trade_api as tradeapi
+import config
 
 ''' 
 Made a scheduler that runs this file at a certain time.
@@ -11,7 +12,7 @@ open the files. You may also have to say "chmod +rx /Users/ryan/Desktop/StockTra
 
 '''
 
-connection = sqlite3.connect('/Users/ryan/Desktop/StockTradingApp/app.db')
+connection = sqlite3.connect(config.DB_FILE)
 connection.row_factory = sqlite3.Row
 
 cursor = connection.cursor()
@@ -31,9 +32,9 @@ rows = cursor.fetchall()
 symbols = [row['symbol'] for row in rows]
 # print(symbols)
 
-api = tradeapi.REST('PKWZU1MUM5DDQJ0MCJII',
-                    'p2tpKxppRP3uJlNmG4X6vNcaWziD7LNUXba1mbby',
-                    base_url='https://paper-api.alpaca.markets')
+api = tradeapi.REST(config.API_KEY,
+                    config.SECRET_KEY,
+                    base_url=config.BASE_URL)
 
 assets = api.list_assets()
 
@@ -47,3 +48,4 @@ for asset in assets:
         print(e)
 
 connection.commit()
+
